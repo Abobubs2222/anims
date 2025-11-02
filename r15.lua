@@ -683,4 +683,4 @@ local function swap_anims(Character31221, Humanoid31221, animNames)
 	Humanoid31221.PlatformStanding:connect(onPlatformStanding)
 	Humanoid31221.Swimming:connect(onSwimming)
 end
-return swap_anims
+return 1
