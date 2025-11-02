@@ -1,4 +1,5 @@
 -- humanoidAnimateR15Moods.lua
+
 local pose = "Standing"
 
 local userNoUpdateOnLoopSuccess, userNoUpdateOnLoopValue = pcall(function() return UserSettings():IsUserFeatureEnabled("UserNoUpdateOnLoop") end)
@@ -114,7 +115,7 @@ function configureAnimationSet(name, fileList)
 	for i, animType in pairs(animTable) do
 		for idx = 1, animType.count, 1 do
 			if PreloadedAnims[animType[idx].anim.AnimationId] == nil then
-				Humanoid:LoadAnimation(animType[idx].anim)
+				Humanoid31221:LoadAnimation(animType[idx].anim)
 				PreloadedAnims[animType[idx].anim.AnimationId] = true
 			end				
 		end
@@ -182,7 +183,7 @@ function configureAnimationSetOld(name, fileList)
 	-- preload anims
 	for i, animType in pairs(animTable) do
 		for idx = 1, animType.count, 1 do 
-			Humanoid:LoadAnimation(animType[idx].anim)
+			Humanoid31221:LoadAnimation(animType[idx].anim)
 		end
 	end
 end
@@ -200,7 +201,7 @@ script.ChildRemoved:connect(scriptChildModified)
 
 -- Clear any existing animation tracks
 -- Fixes issue with characters that are moved in and out of the Workspace accumulating tracks
-local animator = if Humanoid then Humanoid:FindFirstChildOfClass("Animator") else nil
+local animator = if Humanoid31221 then Humanoid31221:FindFirstChildOfClass("Animator") else nil
 if animator then
 	local animTracks = animator:GetPlayingAnimationTracks()
 	for i,track in ipairs(animTracks) do
@@ -269,19 +270,19 @@ function stopAllAnimations()
 end
 
 function getHeightScale()
-	if Humanoid then
-		if not Humanoid.AutomaticScalingEnabled then
+	if Humanoid31221 then
+		if not Humanoid31221.AutomaticScalingEnabled then
 			-- When auto scaling is not enabled, the rig scale stands in for
 			-- a computed scale.
 			return getRigScale()
 		end
 		
-		local scale = Humanoid.HipHeight / HumanoidHipHeight
+		local scale = Humanoid31221.HipHeight / HumanoidHipHeight
 		if AnimationSpeedDampeningObject == nil then
 			AnimationSpeedDampeningObject = script:FindFirstChild("ScaleDampeningPercent")
 		end
 		if AnimationSpeedDampeningObject ~= nil then
-			scale = 1 + (Humanoid.HipHeight - HumanoidHipHeight) * AnimationSpeedDampeningObject.Value / HumanoidHipHeight
+			scale = 1 + (Humanoid31221.HipHeight - HumanoidHipHeight) * AnimationSpeedDampeningObject.Value / HumanoidHipHeight
 		end
 		return scale
 	end	
@@ -365,7 +366,7 @@ function keyFrameReachedFunc(frameName)
 			end
 			
 			local animSpeed = currentAnimSpeed
-			playAnimation(repeatAnim, 0.15, Humanoid)
+			playAnimation(repeatAnim, 0.15, Humanoid31221)
 			setAnimationSpeed(animSpeed)
 		end
 	end
@@ -456,7 +457,7 @@ local currentToolAnimKeyframeHandler = nil
 
 function toolKeyFrameReachedFunc(frameName)
 	if (frameName == "End") then
-		playToolAnimation(toolAnimName, 0.0, Humanoid)
+		playToolAnimation(toolAnimName, 0.0, Humanoid31221)
 	end
 end
 
@@ -513,16 +514,16 @@ end
 function onRunning(speed)
 	local heightScale = if userAnimateScaleRun then getHeightScale() else 1
 	
-	local movedDuringEmote = currentlyPlayingEmote and Humanoid.MoveDirection == Vector3.new(0, 0, 0)
-	local speedThreshold = movedDuringEmote and (Humanoid.WalkSpeed / heightScale) or 0.75
+	local movedDuringEmote = currentlyPlayingEmote and Humanoid31221.MoveDirection == Vector3.new(0, 0, 0)
+	local speedThreshold = movedDuringEmote and (Humanoid31221.WalkSpeed / heightScale) or 0.75
 	if speed > speedThreshold * heightScale then
 		local scale = 16.0
-		playAnimation("walk", 0.2, Humanoid)
+		playAnimation("walk", 0.2, Humanoid31221)
 		setAnimationSpeed(speed / scale)
 		pose = "Running"
 	else
 		if emoteNames[currentAnim] == nil and not currentlyPlayingEmote then
-			playAnimation("idle", 0.2, Humanoid)
+			playAnimation("idle", 0.2, Humanoid31221)
 			pose = "Standing"
 		end
 	end
@@ -533,7 +534,7 @@ function onDied()
 end
 
 function onJumping()
-	playAnimation("jump", 0.1, Humanoid)
+	playAnimation("jump", 0.1, Humanoid31221)
 	jumpAnimTime = jumpAnimDuration
 	pose = "Jumping"
 end
@@ -543,7 +544,7 @@ function onClimbing(speed)
 		speed /= getHeightScale()
 	end
 	local scale = 5.0
-	playAnimation("climb", 0.1, Humanoid)
+	playAnimation("climb", 0.1, Humanoid31221)
 	setAnimationSpeed(speed / scale)
 	pose = "Climbing"
 end
@@ -554,7 +555,7 @@ end
 
 function onFreeFall()
 	if (jumpAnimTime <= 0) then
-		playAnimation("fall", fallTransitionTime, Humanoid)
+		playAnimation("fall", fallTransitionTime, Humanoid31221)
 	end
 	pose = "FreeFall"
 end
@@ -580,28 +581,28 @@ function onSwimming(speed)
 	end
 	if speed > 1.00 then
 		local scale = 10.0
-		playAnimation("swim", 0.4, Humanoid)
+		playAnimation("swim", 0.4, Humanoid31221)
 		setAnimationSpeed(speed / scale)
 		pose = "Swimming"
 	else
-		playAnimation("swimidle", 0.4, Humanoid)
+		playAnimation("swimidle", 0.4, Humanoid31221)
 		pose = "Standing"
 	end
 end
 
 function animateTool()
 	if (toolAnim == "None") then
-		playToolAnimation("toolnone", toolTransitionTime, Humanoid, Enum.AnimationPriority.Idle)
+		playToolAnimation("toolnone", toolTransitionTime, Humanoid31221, Enum.AnimationPriority.Idle)
 		return
 	end
 
 	if (toolAnim == "Slash") then
-		playToolAnimation("toolslash", 0, Humanoid, Enum.AnimationPriority.Action)
+		playToolAnimation("toolslash", 0, Humanoid31221, Enum.AnimationPriority.Action)
 		return
 	end
 
 	if (toolAnim == "Lunge") then
-		playToolAnimation("toollunge", 0, Humanoid, Enum.AnimationPriority.Action)
+		playToolAnimation("toollunge", 0, Humanoid31221, Enum.AnimationPriority.Action)
 		return
 	end
 end
@@ -631,12 +632,12 @@ function stepAnimate(currentTime)
   	end
 
 	if (pose == "FreeFall" and jumpAnimTime <= 0) then
-		playAnimation("fall", fallTransitionTime, Humanoid)
+		playAnimation("fall", fallTransitionTime, Humanoid31221)
 	elseif (pose == "Seated") then
-		playAnimation("sit", 0.5, Humanoid)
+		playAnimation("sit", 0.5, Humanoid31221)
 		return
 	elseif (pose == "Running") then
-		playAnimation("walk", 0.2, Humanoid)
+		playAnimation("walk", 0.2, Humanoid31221)
 	elseif (pose == "Dead" or pose == "GettingUp" or pose == "FallingDown" or pose == "Seated" or pose == "PlatformStanding") then
 		stopAllAnimations()
 		amplitude = 0.1
@@ -645,7 +646,7 @@ function stepAnimate(currentTime)
 	end
 
 	-- Tool Animation handling
-	local tool = Character:FindFirstChildOfClass("Tool")
+	local tool = Character31221:FindFirstChildOfClass("Tool")
 	if tool and tool:FindFirstChild("Handle") then
 		local animStringValueObject = getToolAnim(tool)
 
@@ -671,13 +672,13 @@ function stepAnimate(currentTime)
 end
 
 -- connect events
-Humanoid.Died:connect(onDied)
-Humanoid.Running:connect(onRunning)
-Humanoid.Jumping:connect(onJumping)
-Humanoid.Climbing:connect(onClimbing)
-Humanoid.GettingUp:connect(onGettingUp)
-Humanoid.FreeFalling:connect(onFreeFall)
-Humanoid.FallingDown:connect(onFallingDown)
-Humanoid.Seated:connect(onSeated)
-Humanoid.PlatformStanding:connect(onPlatformStanding)
-Humanoid.Swimming:connect(onSwimming)
+Humanoid31221.Died:connect(onDied)
+Humanoid31221.Running:connect(onRunning)
+Humanoid31221.Jumping:connect(onJumping)
+Humanoid31221.Climbing:connect(onClimbing)
+Humanoid31221.GettingUp:connect(onGettingUp)
+Humanoid31221.FreeFalling:connect(onFreeFall)
+Humanoid31221.FallingDown:connect(onFallingDown)
+Humanoid31221.Seated:connect(onSeated)
+Humanoid31221.PlatformStanding:connect(onPlatformStanding)
+Humanoid31221.Swimming:connect(onSwimming)
