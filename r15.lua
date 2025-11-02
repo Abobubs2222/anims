@@ -1,5 +1,5 @@
 -- humanoidAnimateR15Moods.lua
-local function swap_anims(Character31221, Humanoid31221, animNames)
+return local function swap_anims(Character31221, Humanoid31221, animNames)
 	local pose = "Standing"
 
 	local userNoUpdateOnLoopSuccess, userNoUpdateOnLoopValue = pcall(function() return UserSettings():IsUserFeatureEnabled("UserNoUpdateOnLoop") end)
