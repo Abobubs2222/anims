@@ -1,5 +1,5 @@
 -- humanoidAnimateR15Moods.lua
-
+print(asd)
 local Character = game:GetService("Players").LocalPlayer.Character
 local Humanoid = Character.Humanoid
 local pose = "Standing"
