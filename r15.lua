@@ -1,6 +1,4 @@
 -- humanoidAnimateR15Moods.lua
-local Character = game:GetService("Players").LocalPlayer.Character
-local Humanoid = Character.Humanoid
 local pose = "Standing"
 
 local userNoUpdateOnLoopSuccess, userNoUpdateOnLoopValue = pcall(function() return UserSettings():IsUserFeatureEnabled("UserNoUpdateOnLoop") end)
@@ -34,73 +32,6 @@ local runAnimKeyframeHandler = nil
 local PreloadedAnims = {}
 
 local animTable = {}
-local animNames = { 
-	idle = 	{	
-				{ id = "http://www.roblox.com/asset/?id=507766666", weight = 1 },
-				{ id = "http://www.roblox.com/asset/?id=507766951", weight = 1 },
-				{ id = "http://www.roblox.com/asset/?id=507766388", weight = 9 }
-			},
-	walk = 	{ 	
-				{ id = "http://www.roblox.com/asset/?id=656118852", weight = 10 } 
-			}, 
-	run = 	{
-				{ id = "http://www.roblox.com/asset/?id=656118852", weight = 10 } 
-			}, 
-	swim = 	{
-				{ id = "http://www.roblox.com/asset/?id=507784897", weight = 10 } 
-			}, 
-	swimidle = 	{
-				{ id = "http://www.roblox.com/asset/?id=507785072", weight = 10 } 
-			}, 
-	jump = 	{
-				{ id = "http://www.roblox.com/asset/?id=507765000", weight = 10 } 
-			}, 
-	fall = 	{
-				{ id = "http://www.roblox.com/asset/?id=507767968", weight = 10 } 
-			}, 
-	climb = {
-				{ id = "http://www.roblox.com/asset/?id=507765644", weight = 10 } 
-			}, 
-	sit = 	{
-				{ id = "http://www.roblox.com/asset/?id=2506281703", weight = 10 } 
-			},	
-	toolnone = {
-				{ id = "http://www.roblox.com/asset/?id=507768375", weight = 10 } 
-			},
-	toolslash = {
-				{ id = "http://www.roblox.com/asset/?id=522635514", weight = 10 } 
-			},
-	toollunge = {
-				{ id = "http://www.roblox.com/asset/?id=522638767", weight = 10 } 
-			},
-	wave = {
-				{ id = "http://www.roblox.com/asset/?id=507770239", weight = 10 } 
-			},
-	point = {
-				{ id = "http://www.roblox.com/asset/?id=507770453", weight = 10 } 
-			},
-	dance = {
-				{ id = "http://www.roblox.com/asset/?id=507771019", weight = 10 }, 
-				{ id = "http://www.roblox.com/asset/?id=507771955", weight = 10 }, 
-				{ id = "http://www.roblox.com/asset/?id=507772104", weight = 10 } 
-			},
-	dance2 = {
-				{ id = "http://www.roblox.com/asset/?id=507776043", weight = 10 }, 
-				{ id = "http://www.roblox.com/asset/?id=507776720", weight = 10 }, 
-				{ id = "http://www.roblox.com/asset/?id=507776879", weight = 10 } 
-			},
-	dance3 = {
-				{ id = "http://www.roblox.com/asset/?id=507777268", weight = 10 }, 
-				{ id = "http://www.roblox.com/asset/?id=507777451", weight = 10 }, 
-				{ id = "http://www.roblox.com/asset/?id=507777623", weight = 10 } 
-			},
-	laugh = {
-				{ id = "http://www.roblox.com/asset/?id=507770818", weight = 10 } 
-			},
-	cheer = {
-				{ id = "http://www.roblox.com/asset/?id=507770677", weight = 10 } 
-			},
-}
 
 -- Existance in this list signifies that it is an emote, the value indicates if it is a looping emote
 local emoteNames = { wave = false, point = false, dance = true, dance2 = true, dance3 = true, laugh = false, cheer = false}
